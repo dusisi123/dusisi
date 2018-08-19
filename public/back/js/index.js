@@ -1,5 +1,7 @@
-(function(){
-  var myChart = echarts.init(document.getElementById('main1'));
+$(function() {
+ 
+ 
+    var myChart = echarts.init(document.getElementById('main1'));
 
   var option = {
     xAxis: {
@@ -74,6 +76,5 @@
 
   chart.setOption(option);
 
+})
 
-  
-})()
