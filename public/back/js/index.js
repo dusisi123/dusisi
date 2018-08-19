@@ -73,4 +73,7 @@
   };
 
   chart.setOption(option);
+
+
+  
 })()
