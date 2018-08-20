@@ -63,11 +63,17 @@ $(function(){
     var txt=$(this).text();
     var id=$(this).data('id');
     // 修改文本内容
-    $('.dropdown-text').text( txt );
+    $('.dropdownText').text( txt );
+   
+    $('[name="categoryId"]').val(id);
+
+    //需要将校验状态置成 VALID
+    $('#form').data("bootstrapValidator").updateStatus("categoryId", "VALID");
+
 
 
   })
-//4.让图片出现
+//4.配置图片上传
   $("#fileupload").fileupload({
     dataType:"json",
     //e：事件对象
@@ -78,8 +84,82 @@ $(function(){
       var imgUrl = data.result.picAddr;
        // 设置图片地址
        $('#imgBox img').attr("src",imgUrl);
+       $('[name="brandLogo"]').val(imgUrl);
     }
 });
+
+//5.表单验证
+
+  $('#form').bootstrapValidator({
+
+    excluded: [],
+     
+    feedbackIcons: {
+      valid: 'glyphicon glyphicon-ok',
+      invalid: 'glyphicon glyphicon-remove',
+      validating: 'glyphicon glyphicon-refresh'
+    },
+    fields:{
+      categoryId:{
+        validators:{
+          notEmpty:{
+            message:'请选择一级分类'
+          }
+        }
+        
+      },
+      brandLogo:{
+        validators:{
+          notEmpty:{
+            message:'请上传图片'
+          }
+        }
+
+      },
+
+      brandName:{
+        validators:{
+          notEmpty:{
+            message:'请选择二级分类'
+          }
+        }
+      }
+    
+    
+    }
+
+  })
+
+  //6.注册校验成功事件，通过ajax进行添加
+
+  $("#form").on('success.form.bv', function (e) {
+    
+    e.preventDefault();
+
+    $.ajax({
+      url:"/category/addSecondCategory",
+      type:'post',
+      data:$('#form').serialize(),
+      success:function(info){
+        console.log(info);
+       
+         $('#addModal').modal("hide");
+         currentPage = 1;
+         render();
+        
+         //重置
+         $('#form').data("bootstrapValidator").resetForm( true );
+        
+         //不是表单的元素得手动清除
+
+         $('.dropdownText').text('请选择1级分类')
+
+         $('#imgBox img').attr("src", "images/none.png")
+      }
+    })
+  
+  
+  })
 
 
 

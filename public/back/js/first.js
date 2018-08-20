@@ -85,6 +85,7 @@ $(function(){
           $('#addModal').modal("hide");
           currentPage = 1;
           render();
+          $('#form').data("bootstrapValidator").resetForm( true );
         }
         
       }

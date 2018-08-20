@@ -144,6 +144,12 @@
                 <!-- 挖个坑 -->
               </ul>
             </div>
+
+            <!-- 添加一个 input 表单元素, 存储 categoryId  -->
+            <input type="hidden" name="categoryId">
+
+            <!-- 火热的品牌 hot=1 -->
+            <input type="hidden" name="hot" value="1">
           </div>
           <div class="form-group">
             <input type="text"  name="brandName" class="form-control" placeholder="请输入二级分类">
@@ -160,6 +166,9 @@
 
           <div class="form-group" id="imgBox">
             <img src="./images/none.png" width="100" alt="">
+
+            <!-- 准备一个 input 用于存储 图片地址, 利用隐藏域存数据进行提交 -->
+            <input type="hidden" name="brandLogo" >
           </div>
         </div>
         <div class="modal-footer">
@@ -187,7 +196,7 @@
 
 <script type="text/html" id="dropdownTpl">
   {{ each rows v i }}
-    <li><a href="#">{{ v.categoryName }}</a></li>
+    <li><a href="#" data-id="{{ v.id }}">{{ v.categoryName }}</a></li>
   {{ /each }}
 </script>
 
